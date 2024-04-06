@@ -1,6 +1,5 @@
 package com.exxeta.prompts.user;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -15,11 +14,14 @@ public class UserService {
     }
 
     public User createUser(User user) {
-        // Platz für Businesslogik
         return userRepository.save(user);
     }
 
-    public Optional<User> getUser(Long id) {
+    public Optional<User> getUserById(Long id) {
         return userRepository.findById(id);
+    }
+
+    public User getUserByUsernameAndPassword(String username, String password) {
+        return userRepository.findUserByUsernameAndPassword(username, password);
     }
 }

@@ -5,7 +5,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.lang.reflect.Array;
+import java.util.*;
 
 @RestController
 public class UserController {
@@ -23,7 +24,24 @@ public class UserController {
 
     @GetMapping(path = "/user")
     public ResponseEntity<User> getUser(@RequestParam(value = "id") Long id) {
-        Optional<User> optionalUser = userService.getUser(id);
+        Optional<User> optionalUser = userService.getUserById(id);
         return optionalUser.map(user -> new ResponseEntity<>(user, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+    }
+
+    @GetMapping(path="/login")
+    public ResponseEntity<Map<String, Object>> login(@RequestParam(value = "username") String username,
+                                                      @RequestParam(value = "password") String password) {
+        User user = userService.getUserByUsernameAndPassword(username, password);
+        Map<String, Object> map = new HashMap<>();
+
+        if(user.getId() != null) {
+            map.put("userId", user.getId());
+            map.put("isAuthenticated", true);
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        }
+        else {
+            map.put("isAuthenticated", false);
+            return new ResponseEntity<>(map, HttpStatus.NOT_FOUND);
+        }
     }
 }
