@@ -85,8 +85,9 @@ $ git branch
 * main
 ```
 5. Gradle Build starten
-6. Docker Container starten
+6. Docker Desktop starten
+7. Docker Container starten
 ```bash
 docker-compose up
 ```
-7. Run 'PromptsApplication'
+8. Run 'PromptsApplication'
