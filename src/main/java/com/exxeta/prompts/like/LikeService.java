@@ -24,21 +24,22 @@ public class LikeService {
     public boolean likePrompt(Long promptId, Long userId) {
         Prompt prompt = promptRepository.findById(promptId).orElse(null);
         if (prompt == null) {
-            return false; // Prompt not found
+            return false; // prompt not found
         }
 
-        // Check if User already liked the prompt
+        // check if user already liked the prompt
         Like existingLike = likeRepository.findByPromptIdAndUserId(promptId, userId);
         if (existingLike != null) {
-            return false; // User has already liked the prompt
+            return false; // user has already liked the prompt
         }
-
 
         Like like = new Like();
         like.setPrompt(prompt);
 
         Optional<User> user = userService.getUserById(userId);
         user.ifPresent(like::setUser);
+        // like::setUser eq like.setUser(user.get())
+        // wenn der usern icht exisitert aber der Like Button im Frontend gedrückt wird, wird ein Eintrag mit null als like gespeichert
 
         likeRepository.save(like);
         return true;

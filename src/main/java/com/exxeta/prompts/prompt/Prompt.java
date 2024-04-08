@@ -28,9 +28,10 @@ public class Prompt {
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
+    // ein User kann viele Prompts haben - aber jeder Prompt ist einem User zugeordnet
 
     @OneToMany(mappedBy = "prompt", cascade = CascadeType.ALL)
     @JsonIgnoreProperties("prompt")
     private List<Like> likes;
-
+    // ein Prompt kann viele Like Objekte haben - aber ein Like ist genau einem Prompt zugeordnet
 }
