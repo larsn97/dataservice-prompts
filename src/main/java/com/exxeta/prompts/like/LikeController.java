@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/likes")
+@RequestMapping("/like")
 public class LikeController {
 
     private final LikeService likeService;
@@ -15,7 +15,7 @@ public class LikeController {
         this.likeService = likeService;
     }
 
-    @PostMapping
+    @PostMapping()
     public ResponseEntity<String> likePrompt(@RequestBody LikeRequestDTO likeRequestDTO) {
         boolean liked = likeService.likePrompt(likeRequestDTO.getPromptId(), likeRequestDTO.getUserId());
         if (liked) {
@@ -25,7 +25,7 @@ public class LikeController {
         }
     }
 
-    @GetMapping("/liked")
+    @GetMapping(path="/liked")
     public ResponseEntity<Boolean> checkIfUserLikedPrompt(@RequestParam(value = "promptId") Long promptId, @RequestParam(value="userId") Long userId) {
         boolean likedByCurrentUser = likeService.checkIfUserLikedPrompt(promptId, userId);
         return ResponseEntity.ok(likedByCurrentUser);

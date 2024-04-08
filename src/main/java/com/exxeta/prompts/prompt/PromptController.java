@@ -51,5 +51,9 @@ public class PromptController {
         return new ResponseEntity<>(prompts, HttpStatus.OK);
     }
 
-
+    @DeleteMapping()
+    public ResponseEntity<Void> deletePromptById(@RequestParam(value = "promptId") Long promptId) {
+        promptService.deletePrompt(promptId);
+        return ResponseEntity.noContent().build();
+    }
 }

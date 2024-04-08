@@ -23,5 +23,11 @@ public class PromptService {
         return promptRepository.findByUserId(userId);
     }
 
-
+    public void deletePrompt(Long promptId) {
+        if(promptRepository.existsById(promptId)) {
+            promptRepository.deleteById(promptId);
+        } else {
+            throw new ResourceNotFoundException("Prompt mit der ID " + promptId + " wurde nicht gefunden");
+        }
+    }
 }

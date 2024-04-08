@@ -6,7 +6,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class LikeRequestDTO {
-
     private Long promptId;
     private Long userId;
 }
